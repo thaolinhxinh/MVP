@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyễn Kim - Trải nghiệm Tương tác 3D & AR Tủ Lạnh Cao Cấp</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-theme">
+    <header class="app-header">
+        <div class="header-logo">
+            <span class="logo-red">nguyen</span><span class="logo-blue">kim</span>
+            <span class="logo-badge">3D & AR Lab</span>
+        </div>
+        <nav class="header-tabs">
+            <button class="tab-btn active" data-tab="wireframe">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Bản dựng Wireframe Figma
+            </button>
+            <button class="tab-btn" data-tab="live-experiment">
+                <i class="fa-solid fa-cube"></i> Thử nghiệm 3D & AR Trực tiếp
+            </button>
+        </nav>
+        <div class="header-actions">
+            <button id="theme-toggle" class="theme-toggle-btn" title="Chuyển đổi Giao diện Sáng/Tối">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="app-content">
+        <!-- TAB 1: WIREFRAME FIGMA PROTOTYPE -->
+        <section id="tab-wireframe" class="tab-panel active">
+            <div class="wireframe-workspace">
+                <!-- Left panel: File Browser / Page Navigation -->
+                <aside class="wireframe-sidebar">
+                    <div class="sidebar-title">
+                        <i class="fa-brands fa-figma text-figma"></i> Pages (Trang Thiết kế)
+                    </div>
+                    <ul class="wireframe-pages-list">
+                        <li class="wireframe-page-item active" data-screen="pdp">
+                            <span class="page-dot"></span>
+                            <span class="page-name">1. Chi tiết sản phẩm (PDP)</span>
+                        </li>
+                        <li class="wireframe-page-item" data-screen="viewer3d">
+                            <span class="page-dot"></span>
+                            <span class="page-name">2. Chế độ xem 3D tương tác</span>
+                        </li>
+                        <li class="wireframe-page-item" data-screen="ar-qr">
+                            <span class="page-dot"></span>
+                            <span class="page-name">3. Quét QR mở AR di động</span>
+                        </li>
+                        <li class="wireframe-page-item" data-screen="ar-active">
+                            <span class="page-dot"></span>
+                            <span class="page-name">4. Ướm thử AR (Simulated)</span>
+                        </li>
+                    </ul>
+
+                    <div class="sidebar-help">
+                        <div class="help-title"><i class="fa-solid fa-circle-info"></i> Hướng dẫn thử nghiệm</div>
+                        <p>Nhấp vào các <b>Vùng nhấp nháy xanh (Hotspots)</b> trên màn hình thiết bị để chuyển đổi trạng thái luồng mua sắm hoặc sử dụng danh sách trang bên trên.</p>
+                    </div>
+                </aside>
+
+                <!-- Center: Figma Canvas Emulator -->
+                <div class="canvas-viewport">
+                    <div class="canvas-grid-bg"></div>
+                    <div class="canvas-header">
+                        <div class="device-selector">
+                            <i class="fa-solid fa-mobile-screen-button"></i> iPhone 15 Pro Max <span class="zoom-level">100%</span>
+                        </div>
+                        <button id="toggle-hotspots" class="action-btn-sm" title="Hiển thị/Ẩn vùng bấm tương tác">
+                            <i class="fa-solid fa-eye"></i> Hiện Hotspots
+                        </button>
+                    </div>
+
+                    <!-- Device Wrapper -->
+                    <div class="device-wrapper phone-frame">
+                        <div class="device-screen">
+                            <!-- SCREEN 1: PRODUCT DETAIL PAGE (PDP) -->
+                            <div class="screen-content active" id="screen-pdp">
+                                <div class="status-bar">
+                                    <span>9:41</span>
+                                    <div class="status-icons">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <i class="fa-solid fa-wifi"></i>
+                                        <i class="fa-solid fa-battery-three-quarters"></i>
+                                    </div>
+                                </div>
+                                <div class="screen-header">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                    <span class="screen-title">Chi tiết sản phẩm</span>
+                                    <i class="fa-solid fa-share-nodes"></i>
+                                </div>
+                                <div class="screen-body scrollable">
+                                    <!-- Image gallery -->
+                                    <div class="pdp-image-container">
+                                        <div class="pdp-badge">Bán chạy</div>
+                                        <div class="pdp-main-image-placeholder">
+                                            <i class="fa-solid fa-box-open 3d-box-icon"></i>
+                                            <div class="model-tag">Tủ lạnh Bespoke Multi-door</div>
+                                            <!-- Hotspot 3D Viewer inside PDP image -->
+                                            <div class="hotspot hotspot-view3d animate-pulse" data-target="viewer3d" title="Bấm để xem 3D tương tác"></div>
+                                            <div class="quick-ar-btn-pdp"><i class="fa-solid fa-cube"></i> Xem 3D & AR</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Product Info -->
+                                    <div class="pdp-info-section">
+                                        <div class="pdp-brand">SAMSUNG</div>
+                                        <h2 class="pdp-title">Tủ lạnh Bespoke Multidoor 648L (RF60A91R1GD/SV)</h2>
+                                        <div class="pdp-rating">
+                                            <span class="stars"><i class="fa-solid fa-star"></i> 4.8</span>
+                                            <span class="reviews">(124 đánh giá)</span>
+                                        </div>
+                                        <div class="pdp-price-row">
+                                            <span class="price-current">58.900.000đ</span>
+                                            <span class="price-old">69.900.000đ</span>
+                                            <span class="discount">-15%</span>
+                                        </div>
+                                        <div class="pdp-shipping"><i class="fa-solid fa-truck-fast"></i> Miễn phí vận chuyển & Lắp đặt</div>
+                                    </div>
+
+                                    <!-- Interactive CTA Grid -->
+                                    <div class="pdp-interactive-banner">
+                                        <div class="banner-title"><i class="fa-solid fa-circle-nodes text-red"></i> Thử nghiệm Không gian Mới</div>
+                                        <p class="banner-desc">Đo đạc hốc tủ và ướm thử 3D/AR vào phòng bếp thực tế trước khi mua để đảm bảo vừa vặn.</p>
+                                        <div class="banner-buttons">
+                                            <button class="btn-banner-3d" id="btn-pdp-to-3d">
+                                                <i class="fa-solid fa-rotate-3d"></i> Xem góc 3D
+                                                <div class="hotspot hotspot-btn-3d" data-target="viewer3d"></div>
+                                            </button>
+                                            <button class="btn-banner-ar" id="btn-pdp-to-ar">
+                                                <i class="fa-solid fa-camera"></i> Ướm thử AR
+                                                <div class="hotspot hotspot-btn-ar" data-target="ar-qr"></div>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Product Details Spec -->
+                                    <div class="pdp-specs">
+                                        <h3>Thông số kỹ thuật</h3>
+                                        <div class="spec-table">
+                                            <div class="spec-row"><span>Dung tích thực</span><strong>648 Lít</strong></div>
+                                            <div class="spec-row"><span>Kích thước (RxCxS)</span><strong>91.2 x 185.3 x 67.3 cm</strong></div>
+                                            <div class="spec-row"><span>Công nghệ</span><strong>Inverter tiết kiệm điện</strong></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="screen-footer">
+                                    <div class="footer-btn footer-btn-cart"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ</div>
+                                    <div class="footer-btn footer-btn-buy">Mua Ngay</div>
+                                </div>
+                            </div>
+
+                            <!-- SCREEN 2: 3D VIEW MODE -->
+                            <div class="screen-content" id="screen-viewer3d">
+                                <div class="status-bar">
+                                    <span>9:41</span>
+                                    <div class="status-icons">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <i class="fa-solid fa-wifi"></i>
+                                        <i class="fa-solid fa-battery-three-quarters"></i>
+                                    </div>
+                                </div>
+                                <div class="screen-header header-dark">
+                                    <i class="fa-solid fa-chevron-left hotspot" data-target="pdp"></i>
+                                    <span class="screen-title">Xem 3D Sản Phẩm</span>
+                                    <i class="fa-solid fa-circle-question"></i>
+                                </div>
+                                <div class="viewer-body">
+                                    <!-- Refrigerator 3D illustration mockup -->
+                                    <div class="wireframe-3d-visualizer">
+                                        <div class="mock-fridge-3d">
+                                            <div class="fridge-body-mock">
+                                                <div class="door-upper-left"></div>
+                                                <div class="door-upper-right">
+                                                    <div class="mock-led-panel">4°C</div>
+                                                </div>
+                                                <div class="door-lower-mock"></div>
+                                            </div>
+                                            <div class="dimensions-indicator-mock">
+                                                <span class="dim-w">91.2 cm</span>
+                                                <span class="dim-h">185.3 cm</span>
+                                            </div>
+                                        </div>
+                                        <div class="three-d-tips">
+                                            <i class="fa-solid fa-hand-pointer"></i> Vuốt để xoay 360° | Chạm hai ngón để zoom
+                                        </div>
+
+                                        <div class="viewer-hud-controls">
+                                            <button class="hud-circle-btn active" title="Đổi màu vỏ tủ"><i class="fa-solid fa-palette"></i></button>
+                                            <button class="hud-circle-btn" title="Mở cánh tủ"><i class="fa-solid fa-door-open"></i></button>
+                                            <button class="hud-circle-btn" title="Đo đạc"><i class="fa-solid fa-ruler-combined"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Controls Panel Drawer -->
+                                    <div class="viewer-drawer">
+                                        <div class="drawer-handle"></div>
+                                        <div class="drawer-content">
+                                            <h4 class="drawer-product-title">Tủ lạnh Bespoke Multidoor 648L</h4>
+                                            
+                                            <!-- Color swatches -->
+                                            <div class="drawer-section">
+                                                <span class="section-label">Màu sắc thiết kế:</span>
+                                                <div class="color-options-row">
+                                                    <span class="swatch swatch-silver active"></span>
+                                                    <span class="swatch swatch-navy"></span>
+                                                    <span class="swatch swatch-charcoal"></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Dimension Check Button & AR Button -->
+                                            <div class="drawer-action-row">
+                                                <button class="btn-drawer-outline hotspot" data-target="pdp">
+                                                    <i class="fa-solid fa-circle-info"></i> Chi tiết
+                                                </button>
+                                                <button class="btn-drawer-primary hotspot" data-target="ar-qr">
+                                                    <i class="fa-solid fa-camera"></i> Thử đặt vào phòng
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SCREEN 3: AR QR CODE OVERLAY (DI ĐỘNG) -->
+                            <div class="screen-content" id="screen-ar-qr">
+                                <div class="status-bar">
+                                    <span>9:41</span>
+                                    <div class="status-icons">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <i class="fa-solid fa-wifi"></i>
+                                        <i class="fa-solid fa-battery-three-quarters"></i>
+                                    </div>
+                                </div>
+                                <div class="screen-header">
+                                    <i class="fa-solid fa-xmark hotspot" data-target="pdp"></i>
+                                    <span class="screen-title">Mở Trải Nghiệm AR</span>
+                                    <span></span>
+                                </div>
+                                <div class="screen-body qr-panel-body">
+                                    <div class="qr-explanation">
+                                        <h3>Mở Camera Điện Thoại để quét</h3>
+                                        <p>Tính năng Ướm thử AR hoạt động tốt nhất trên thiết bị di động hỗ trợ WebXR (iOS/Android).</p>
+                                    </div>
+
+                                    <div class="mock-qr-code-container">
+                                        <div class="mock-qr-border">
+                                            <i class="fa-solid fa-qrcode qr-icon"></i>
+                                        </div>
+                                        <div class="qr-scan-line"></div>
+                                    </div>
+
+                                    <div class="qr-steps">
+                                        <div class="step-card">
+                                            <span class="step-num">1</span>
+                                            <span>Quét mã QR để mở trang sản phẩm trên di động.</span>
+                                        </div>
+                                        <div class="step-card">
+                                            <span class="step-num">2</span>
+                                            <span>Nhấn nút <b>"Xem trong phòng của bạn"</b>.</span>
+                                        </div>
+                                        <div class="step-card">
+                                            <span class="step-num">3</span>
+                                            <span>Quét nền nhà để tủ lạnh 3D tự động đặt đúng kích thước thật.</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mock shortcut for testing desktop AR simulation directly -->
+                                    <div class="desktop-mock-ar-shortcut">
+                                        <p class="text-muted text-sm">Đang thử nghiệm trên máy tính?</p>
+                                        <button class="btn-simulation hotspot" data-target="ar-active">
+                                            <i class="fa-solid fa-desktop"></i> Giả lập camera trực tiếp
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SCREEN 4: AR ACTIVE SIMULATION -->
+                            <div class="screen-content" id="screen-ar-active">
+                                <div class="ar-camera-view-mock">
+                                    <!-- Simulated camera background grid/overlay -->
+                                    <div class="ar-grid-mesh"></div>
+                                    
+                                    <!-- Refrigerator 3D overlaid on kitchen mock background -->
+                                    <div class="ar-refrigerator-overlay">
+                                        <div class="fridge-3d-model-mock-ar">
+                                            <div class="mock-shadow"></div>
+                                            <div class="mock-model-front">
+                                                <div class="led-dot"></div>
+                                            </div>
+                                            <div class="mock-ar-dimension-bubble">
+                                                RxCxS: 91 x 185 x 67 cm
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- AR Interface Overlays -->
+                                    <div class="ar-top-bar">
+                                        <button class="ar-round-btn hotspot" data-target="viewer3d"><i class="fa-solid fa-arrow-left"></i></button>
+                                        <span class="ar-status-text"><i class="fa-solid fa-circle-dot text-red blinking"></i> Chế độ AR Live</span>
+                                        <button class="ar-round-btn"><i class="fa-solid fa-arrows-rotate"></i></button>
+                                    </div>
+
+                                    <div class="ar-bottom-controls">
+                                        <div class="ar-hint-box">
+                                            <i class="fa-solid fa-arrows-to-eye"></i> Kéo để dịch chuyển, 2 ngón để xoay tủ lạnh
+                                        </div>
+                                        
+                                        <!-- Size fit quick feedback badge -->
+                                        <div class="ar-fit-badge fit-success">
+                                            <i class="fa-solid fa-circle-check"></i> Vừa vặn (Khoảng trống: 12cm)
+                                        </div>
+
+                                        <div class="ar-action-buttons">
+                                            <button class="ar-main-action hotspot" data-target="pdp">
+                                                <i class="fa-solid fa-cart-shopping"></i> Mua Ngay
+                                            </button>
+                                            <button class="ar-secondary-action">
+                                                <i class="fa-solid fa-camera-retro"></i> Chụp ảnh lại
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right panel: UX & Design Annotations -->
+                <aside class="wireframe-annotations">
+                    <div class="annotations-title">
+                        <i class="fa-solid fa-book-open"></i> Ghi chú UX & Quyết định Thiết kế
+                    </div>
+                    <div class="annotations-content scrollable">
+                        <!-- Annotations change dynamically based on the active screen -->
+                        <div class="annotation-card" id="note-pdp">
+                            <div class="note-header">
+                                <span class="note-badge">Màn hình 1</span>
+                                <h4>Chi tiết Sản phẩm (PDP)</h4>
+                            </div>
+                            <div class="note-body">
+                                <h5>1. Vị trí nút CTA tích hợp 3D/AR:</h5>
+                                <p>Được tích hợp trực tiếp góc dưới của khung trưng bày ảnh sản phẩm và một Banner tương tác nổi bật phía dưới giá tiền. Tối đa hóa tỷ lệ click chuột (CTR) của người dùng tò mò.</p>
+                                
+                                <h5>2. Tiếp cận dễ dàng:</h5>
+                                <p>Cung cấp 2 lựa chọn rõ ràng: xem nhanh góc xoay 3D tại chỗ hoặc kích hoạt AR bằng Camera điện thoại.</p>
+
+                                <div class="ux-tip">
+                                    <strong><i class="fa-solid fa-lightbulb"></i> Lợi ích Kinh doanh:</strong>
+                                    Tăng thời gian giữ chân (Time on site) thêm 30% và giảm tỷ lệ hoàn hàng do sai lệch kích cỡ phòng bếp.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="annotation-card hidden" id="note-viewer3d">
+                            <div class="note-header">
+                                <span class="note-badge">Màn hình 2</span>
+                                <h4>Chế độ xem 3D Tương tác</h4>
+                            </div>
+                            <div class="note-body">
+                                <h5>1. Xoay 360° & Đổi màu vỏ (Bespoke Swatches):</h5>
+                                <p>Người dùng có thể thử phối màu vỏ (Hồng/Xanh, Bạc, Đen nhám) theo thiết kế nội thất nhà mình ngay lập tức.</p>
+                                
+                                <h5>2. Hoạt ảnh đóng mở cửa tủ:</h5>
+                                <p>Bắt buộc phải có để người dùng thấy rõ cấu trúc các khay kệ, ngăn đông, ngăn mát bên trong tủ lạnh để kiểm tra dung tích thực tế.</p>
+                                
+                                <h5>3. Đường viền kích thước động:</h5>
+                                <p>Kích thước Chiều rộng, Chiều cao, Chiều sâu hiển thị dạng 3D trực quan khi xoay tủ lạnh, giúp người dùng định vị không gian.</p>
+                            </div>
+                        </div>
+
+                        <div class="annotation-card hidden" id="note-ar-qr">
+                            <div class="note-header">
+                                <span class="note-badge">Màn hình 3</span>
+                                <h4>Quét Mã QR mở trên Di động</h4>
+                            </div>
+                            <div class="note-body">
+                                <h5>1. Thu hẹp khoảng cách thiết bị:</h5>
+                                <p>Vì đa số người dùng duyệt hàng trên Desktop, nhưng tính năng AR quét phòng thật chỉ khả dụng trên camera Di động (WebXR). Mã QR Code là cầu nối hoàn hảo để người dùng chuyển đổi thiết bị không gián đoạn.</p>
+                                
+                                <h5>2. Hướng dẫn từng bước trực quan:</h5>
+                                <p>Giảm thiểu sự bỡ ngỡ của khách hàng lớn tuổi khi lần đầu tiếp cận công nghệ AR.</p>
+                            </div>
+                        </div>
+
+                        <div class="annotation-card hidden" id="note-ar-active">
+                            <div class="note-header">
+                                <span class="note-badge">Màn hình 4</span>
+                                <h4>Ướm thử AR trong phòng thực tế</h4>
+                            </div>
+                            <div class="note-body">
+                                <h5>1. Giữ nguyên tỷ lệ thực tế (1:1 Ratio):</h5>
+                                <p>Tủ lạnh tự động khớp theo kích thước thật trong không gian quét, giảm thiểu sai sót tự căn chỉnh bằng tay.</p>
+                                
+                                <h5>2. Phản hồi vừa vặn tức thì (Fit Check Badge):</h5>
+                                <p>Cảnh báo xanh (Đủ chỗ) hoặc đỏ (Chật hẹp/Không vừa) dựa trên kích cỡ quét được, tăng độ tin cậy khi quyết định mua hàng.</p>
+                                
+                                <h5>3. Nút mua nhanh (Instantly Buy CTA):</h5>
+                                <p>Đặt giỏ hàng ngay trong giao diện camera, thúc đẩy chuyển đổi mua sắm tức thì.</p>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- TAB 2: LIVE 3D & AR EXPERIMENT -->
+        <section id="tab-live-experiment" class="tab-panel">
+            <div class="experiment-container">
+                <!-- Left panel: WebGL Canvas and Camera Frame -->
+                <div class="viewer-main-canvas-area">
+                    <div class="viewer-render-box">
+                        <!-- Simulated Camera Background for AR mode -->
+                        <video id="webcam-feed" autoplay playsinline muted class="camera-bg-video hidden"></video>
+                        <div id="kitchen-bg-overlay" class="kitchen-bg-image"></div>
+                        
+                        <!-- Three.js Canvas Container -->
+                        <div id="threejs-canvas-container"></div>
+
+                        <!-- Dimension line HUD overlay toggleable -->
+                        <div class="canvas-floating-indicators">
+                            <div class="indicator-group" id="dimension-switch-container">
+                                <label class="switch">
+                                    <input type="checkbox" id="toggle-3d-dimensions" checked>
+                                    <span class="slider-round"></span>
+                                </label>
+                                <span class="label-text">Kích thước 3D</span>
+                            </div>
+                            <div class="indicator-group">
+                                <button id="btn-reset-view" class="hud-circle-btn-sm" title="Khôi phục góc nhìn"><i class="fa-solid fa-arrows-spin"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- AR Camera HUD (Visible only when AR mode is on) -->
+                        <div id="ar-hud-overlay" class="ar-hud hidden">
+                            <div class="ar-hud-status">
+                                <i class="fa-solid fa-camera-retro"></i>
+                                <span>Chế độ AR Giả lập (Tỷ lệ 1:1)</span>
+                            </div>
+                            <div class="ar-gesture-simulator-hint">
+                                <p><i class="fa-solid fa-hand-pointer"></i> Kéo chuột trái để dịch chuyển tủ | Kéo chuột phải để xoay tủ</p>
+                            </div>
+                        </div>
+
+                        <!-- Inside Fridge Detail Popover -->
+                        <div id="fridge-interior-badge" class="interior-badge hidden">
+                            <span class="badge-text"><i class="fa-solid fa-lightbulb"></i> Đang mở cửa: 648L dung tích thực, ngăn mát kháng khuẩn Metal Cooling</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right panel: Live Interactive controls -->
+                <div class="experiment-sidebar">
+                    <div class="sidebar-section product-summary-card">
+                        <div class="brand-tag">SAMSUNG BESPOKE</div>
+                        <h3>Tủ lạnh Multidoor 648L RF60A91R1GD</h3>
+                        <div class="rating-price-bar">
+                            <span class="price">58.900.000đ</span>
+                            <span class="specs-tag">Chiều cao: 1.85m</span>
+                        </div>
+                    </div>
+
+                    <!-- 3D Interactions -->
+                    <div class="sidebar-section">
+                        <h4 class="section-title"><i class="fa-solid fa-sliders"></i> Tương tác 3D Tủ Lạnh</h4>
+                        
+                        <!-- Door open/close slider -->
+                        <div class="control-group">
+                            <div class="control-label-row">
+                                <span>Độ mở cánh cửa tủ:</span>
+                                <span id="door-angle-text" class="control-val">Đang đóng (0%)</span>
+                            </div>
+                            <input type="range" id="door-open-slider" min="0" max="100" value="0" class="styled-range">
+                            <div class="quick-btn-row">
+                                <button id="btn-quick-close" class="btn-outline-sm active">Đóng toàn bộ</button>
+                                <button id="btn-quick-open" class="btn-outline-sm">Mở toàn bộ</button>
+                            </div>
+                        </div>
+
+                        <!-- Material color switcher -->
+                        <div class="control-group">
+                            <span>Vật liệu & Màu sắc vỏ tủ:</span>
+                            <div class="color-picker-grid">
+                                <button class="color-btn active" data-color="silver" style="background: linear-gradient(135deg, #e0e0e0, #9e9e9e);">
+                                    <span class="color-name">Bạc Titan (Thép)</span>
+                                </button>
+                                <button class="color-btn" data-color="navy" style="background: linear-gradient(135deg, #1b365d, #0d1e3d);">
+                                    <span class="color-name">Xanh Navy (Kính)</span>
+                                </button>
+                                <button class="color-btn" data-color="charcoal" style="background: linear-gradient(135deg, #424242, #212121);">
+                                    <span class="color-name">Đen Obsidian (Nhám)</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AR Space Placement & Camera Simulation -->
+                    <div class="sidebar-section bg-section-highlight">
+                        <h4 class="section-title"><i class="fa-solid fa-camera"></i> Phòng Thử Nghiệm AR (Ướm không gian)</h4>
+                        
+                        <!-- Toggle Simulated AR vs Normal 3D -->
+                        <div class="control-group">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="toggle-ar-mode">
+                                <span class="checkmark"></span>
+                                <strong>Kích hoạt chế độ Ướm thử AR</strong>
+                            </label>
+                            <p class="section-helper">Chế độ này sẽ chiếu tủ lạnh lên không gian camera hoặc phòng mẫu để đo đạc thực tế.</p>
+                        </div>
+
+                        <!-- AR Camera Background Settings -->
+                        <div id="ar-camera-settings" class="disabled-group">
+                            <div class="control-group">
+                                <span>Nguồn nền AR:</span>
+                                <div class="bg-source-selector">
+                                    <button class="bg-source-btn active" data-source="kitchen-modern">
+                                        <i class="fa-solid fa-image"></i> Bếp hiện đại
+                                    </button>
+                                    <button class="bg-source-btn" data-source="kitchen-classic">
+                                        <i class="fa-solid fa-image"></i> Bếp ấm cúng
+                                    </button>
+                                    <button class="bg-source-btn" id="btn-use-webcam">
+                                        <i class="fa-solid fa-camera"></i> Webcam trực tiếp
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Position adjustments (Translate, Rotate, Scale) -->
+                            <div class="control-group">
+                                <div class="control-label-row">
+                                    <span>Góc xoay tủ lạnh:</span>
+                                    <span id="ar-rotate-val" class="control-val">0°</span>
+                                </div>
+                                <input type="range" id="ar-rotate-slider" min="0" max="360" value="0" class="styled-range">
+                            </div>
+
+                            <div class="control-group">
+                                <div class="control-label-row">
+                                    <span>Tỉ lệ kích thước (Phối cảnh):</span>
+                                    <span id="ar-scale-val" class="control-val">100%</span>
+                                </div>
+                                <input type="range" id="ar-scale-slider" min="50" max="150" value="100" class="styled-range">
+                            </div>
+                            
+                            <div class="control-group">
+                                <div class="control-label-row">
+                                    <span>Độ cao đặt tủ (Y-axis):</span>
+                                    <span id="ar-height-val" class="control-val">0 cm</span>
+                                </div>
+                                <input type="range" id="ar-height-slider" min="-100" max="100" value="0" class="styled-range">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kitchen Fitting Calculator (Size Fit Check) -->
+                    <div class="sidebar-section">
+                        <h4 class="section-title"><i class="fa-solid fa-ruler-combined"></i> Kiểm Tra Khe Hở Tủ Bếp (Size Fit Check)</h4>
+                        <p class="section-helper">Nhập kích thước hốc tủ bếp nhà bạn để hệ thống tự động kiểm tra khoảng cách thoát nhiệt an toàn (tối thiểu 5cm hai bên và đỉnh tủ).</p>
+                        
+                        <div class="dimension-inputs-row">
+                            <div class="input-unit">
+                                <label for="kitchen-w">Chiều Rộng (cm)</label>
+                                <input type="number" id="kitchen-w" value="110" min="50" max="300" step="1">
+                            </div>
+                            <div class="input-unit">
+                                <label for="kitchen-h">Chiều Cao (cm)</label>
+                                <input type="number" id="kitchen-h" value="200" min="50" max="300" step="1">
+                            </div>
+                            <div class="input-unit">
+                                <label for="kitchen-d">Chiều Sâu (cm)</label>
+                                <input type="number" id="kitchen-d" value="80" min="50" max="300" step="1">
+                            </div>
+                        </div>
+
+                        <button id="btn-check-fit" class="btn-primary-action"><i class="fa-solid fa-calculator"></i> Tính toán độ vừa vặn</button>
+
+                        <!-- Size Fit Results HUD -->
+                        <div id="fit-result-card" class="fit-result-card fit-neutral">
+                            <div class="fit-result-header">
+                                <i id="fit-icon" class="fa-solid fa-circle-question"></i>
+                                <strong id="fit-title">Chưa thực hiện tính toán</strong>
+                            </div>
+                            <p id="fit-message" class="fit-message-text">Hãy nhập kích thước hốc tủ bếp và nhấn nút tính toán.</p>
+                            <div id="fit-details" class="fit-details-grid hidden">
+                                <div class="fit-detail-item"><span>Khe hở ngang:</span> <strong id="fit-w-val">-</strong></div>
+                                <div class="fit-detail-item"><span>Khe hở đứng:</span> <strong id="fit-h-val">-</strong></div>
+                                <div class="fit-detail-item"><span>Khe hở sau:</span> <strong id="fit-d-val">-</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer-bar">
+        <p>&copy; 2026 Siêu thị Điện máy Nguyễn Kim. Tất cả quyền được bảo lưu. Bản quyền thuộc dự án 3D & AR Innovation Lab.</p>
+    </footer>
+
+    <!-- Three.js Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- OrbitControls for camera manipulation -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- FontAwesome JS for animations if any -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <!-- App Scripts -->
+    <script src="three-viewer.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
